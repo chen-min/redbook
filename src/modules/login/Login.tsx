@@ -9,9 +9,10 @@ import {
   TextInput,
   LayoutAnimation,
 } from 'react-native';
-
+import Toast from '../../components/widget/Toast';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import UserStore from '../../stores/UserStore';
 
 import {formatPhone, clearBlank} from '../../utils/stringUtil';
 
@@ -43,6 +44,13 @@ export default () => {
     if (!canLogin || !check) {
       return;
     }
+    UserStore.login(clearBlank(phone), pwd, (success: boolean) => { 
+      if (success) {
+        navigation.replace('Home')
+      } else { 
+        Toast.show('登录失败,请检查用户名与密码')
+      }
+    })
   };
 
   const renderQuickLogin = () => {
@@ -127,9 +135,7 @@ export default () => {
           </TouchableOpacity>
           <Text style={allStyles.labelText}>我已阅读并同意</Text>
           <TouchableOpacity
-            onPress={() => {
-              Linking.openURL('https://www.baidu.com');
-            }}>
+            >
             <Text style={allStyles.protocolTxt}>
               《用户协议》和《隐私政策》
             </Text>
@@ -142,17 +148,17 @@ export default () => {
             LayoutAnimation.easeInEaseOut();
             setLoginType('input');
           }}>
-          <Text style={styles.otherLoginTxt}>其它登陆方式</Text>
+          <Text style={styles.otherLoginTxt}>其它登录方式</Text>
           <Image style={styles.icon_arrow} source={icon_arrow} />
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.wxLoginButton} activeOpacity={0.7}>
           <Image style={styles.icon_wx} source={icon_wx_small} />
-          <Text style={styles.wxLoginTxt}>微信登陆</Text>
+          <Text style={styles.wxLoginTxt}>微信登录</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.oneKeyLoginButton} activeOpacity={0.7}>
-          <Text style={styles.oneKeyLoginTxt}>一键登陆</Text>
+          <Text style={styles.oneKeyLoginTxt}>一键登录</Text>
         </TouchableOpacity>
 
         <Image style={styles.logoMain} source={icon_logo_main} />
@@ -294,10 +300,11 @@ export default () => {
       },
     });
     const canLogin = phone?.length === 13 && pwd?.length === 6;
+    console.log(canLogin,'333')
     return (
       <View style={styles.root}>
-        <Text style={styles.pwdLogin}>密码登陆</Text>
-        <Text style={styles.tip}>未注册的手机号登陆成功后将自动注册</Text>
+        <Text style={styles.pwdLogin}>密码登录</Text>
+        <Text style={styles.tip}>未注册的手机号登录成功后将自动注册</Text>
         <View style={styles.phoneLayout}>
           <Text style={styles.pre86}>+86</Text>
           <Image style={styles.triangle} source={icon_triangle} />
@@ -310,6 +317,7 @@ export default () => {
             maxLength={13}
             value={phone}
             onChangeText={(text: string) => {
+              console.log('11111112')
               setPhone(formatPhone(text));
             }}
           />
@@ -342,7 +350,7 @@ export default () => {
 
         <View style={styles.changeLayout}>
           <Image style={styles.exchangeIcon} source={icon_exchange} />
-          <Text style={styles.codeLoginTxt}>验证码登陆</Text>
+          <Text style={styles.codeLoginTxt}>验证码登录</Text>
           <Text style={styles.forgetPwdTxt}>忘记密码？</Text>
         </View>
 
@@ -350,7 +358,7 @@ export default () => {
           activeOpacity={canLogin ? 0.7 : 1}
           style={canLogin ? styles.loginButton : styles.loginButtonDisable}
           onPress={onLoginPress}>
-          <Text style={styles.loginTxt}>登陆</Text>
+          <Text style={styles.loginTxt}>登录</Text>
         </TouchableOpacity>
 
         <View style={allStyles.protocolLayout}>
@@ -369,6 +377,7 @@ export default () => {
               // Linking.openURL('https://www.baidu.com');
             }}>
             <Text style={allStyles.protocolTxt}>
+              {canLogin}111
               《用户协议》和《隐私政策》
             </Text>
           </TouchableOpacity>
