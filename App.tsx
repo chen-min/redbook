@@ -6,6 +6,8 @@ import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import Welcome from './src/modules/welcome/Welcome';
 import Login from './src/modules/login/Login';
 import Home from './src/modules/home/Home';
+import NavTab from './src/modules/navTab/NavTab';
+
 const Stack = createStackNavigator();
 // 验证表单方法
 function App(): JSX.Element {
@@ -24,8 +26,10 @@ function App(): JSX.Element {
             name="Home"
             component={Home}
             options={{headerShown: false}}></Stack.Screen>
-
-
+          <Stack.Screen
+            name="NavTab"
+            component={NavTab}
+            options={{headerShown: false}}></Stack.Screen>
           <Stack.Screen
             name="Login"
             component={Login}

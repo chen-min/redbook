@@ -44,13 +44,13 @@ export default () => {
     if (!canLogin || !check) {
       return;
     }
-    UserStore.login(clearBlank(phone), pwd, (success: boolean) => { 
+    UserStore.login(clearBlank(phone), pwd, (success: boolean) => {
       if (success) {
-        navigation.replace('Home')
-      } else { 
-        Toast.show('登录失败,请检查用户名与密码')
+        navigation.replace('NavTab');
+      } else {
+        Toast.show('Login failed, please check the user name and password');
       }
-    })
+    });
   };
 
   const renderQuickLogin = () => {
@@ -134,8 +134,7 @@ export default () => {
             />
           </TouchableOpacity>
           <Text style={allStyles.labelText}>我已阅读并同意</Text>
-          <TouchableOpacity
-            >
+          <TouchableOpacity>
             <Text style={allStyles.protocolTxt}>
               《用户协议》和《隐私政策》
             </Text>
@@ -300,7 +299,7 @@ export default () => {
       },
     });
     const canLogin = phone?.length === 13 && pwd?.length === 6;
-    console.log(canLogin,'333')
+    console.log(canLogin, '333');
     return (
       <View style={styles.root}>
         <Text style={styles.pwdLogin}>密码登录</Text>
@@ -317,7 +316,6 @@ export default () => {
             maxLength={13}
             value={phone}
             onChangeText={(text: string) => {
-              console.log('11111112')
               setPhone(formatPhone(text));
             }}
           />
@@ -377,8 +375,7 @@ export default () => {
               // Linking.openURL('https://www.baidu.com');
             }}>
             <Text style={allStyles.protocolTxt}>
-              {canLogin}111
-              《用户协议》和《隐私政策》
+              {canLogin}111 《用户协议》和《隐私政策》
             </Text>
           </TouchableOpacity>
         </View>
