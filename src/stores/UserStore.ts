@@ -4,6 +4,7 @@ import {action, flow} from 'mobx';
 
 class UserStore {
   userInfo: any;
+
   setUserInfo = (info: any) => {
     this.userInfo = info;
   };

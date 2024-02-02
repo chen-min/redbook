@@ -47,7 +47,10 @@ export default () => {
           const isFocused = index === i;
           if (i === 2) {
             return (
-              <TouchableOpacity style={styles.tabItem} onPress={publish}>
+              <TouchableOpacity
+                style={styles.tabItem}
+                key={title}
+                onPress={publish}>
                 <Image style={styles.tabPublish} source={icon_tab_publish} />
               </TouchableOpacity>
             );
